@@ -33,6 +33,7 @@ public class ArregloSufijos implements RawReadProcessor{
 			String suffix = suffixes.get(i);
 			int pos = l - suffix.length();
 			positions[i]=pos;
+			
 		}
 	}
 
@@ -65,7 +66,8 @@ public class ArregloSufijos implements RawReadProcessor{
 		int indice = busquedaBinaria(sseq);
 		int posOriginal = positions[indice];
 		
-	    System.out.println("Sequence " + sseq + " is in pos: " + posOriginal);
+	    //System.out.println("Sequence " + sseq + " is in pos: " + posOriginal);
+		System.out.print(posOriginal+",");
 	    //System.out.println("o sea "+ sequence.substring(posOriginal, posOriginal + 35));
 		
 		

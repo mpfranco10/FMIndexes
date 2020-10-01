@@ -69,16 +69,38 @@ public class FMindexesExample {
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		
 		time = System.currentTimeMillis();
+		ArregloSufijosMejorado asm = new ArregloSufijosMejorado(sequence);
+		
+		asm.buildSuffixes();
+		System.out.println("Number of suffixes: " + asm.getSuffixesSize());
+		as.computePositions();
+//		int[] pos = as.getPositions();
+//		for (int i = 0; i < pos.length; i++) {
+//			System.out.println(i);
+//			System.out.println(pos[i]);
+//			System.out.println(s.get(i));
+//			System.out.println("----");
+//		}
+		time = System.currentTimeMillis() - time;
+		System.out.println("Time building optimized array (ms): " + time);
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		
+		time = System.currentTimeMillis();
 		processFastq(fastqFilename, as); //lee el fastq
 		time = System.currentTimeMillis() - time;
 		System.out.println("Time searching each sequence in Suffix array (ms): " + time);
 		
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		
+		
+		
 		time = System.currentTimeMillis();
 		IndiceFM ifm = new IndiceFM(as);
 		ifm.calcularBWT();
 		ifm.calcularTally();
+		time = System.currentTimeMillis() - time;
+		System.out.println("Time building FM Index (ms): " + time);
+		time = System.currentTimeMillis();
 		processFastq(fastqFilename,ifm);
 		time = System.currentTimeMillis() - time;
 		System.out.println("Time searching each sequence in FMIndex (ms): " + time);
@@ -101,6 +123,7 @@ public class FMindexesExample {
 				RawRead read = it.next();
 				processor.processRead(read);
 			}
+			System.out.println("");
 		}
 	}
 }
